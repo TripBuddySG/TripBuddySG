@@ -1,0 +1,268 @@
+{% load staticfiles %}
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}" />
+
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/validate-email.js' %}"></script>
+
+
+    <link rel="apple-touch-icon" sizes="57x57" href="{% static 'favicon/apple-icon-57x57.png' %}">
+    <link rel="apple-touch-icon" sizes="60x60" href="{% static 'favicon/apple-icon-60x60.png' %}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{% static 'favicon/apple-icon-72x72.png' %}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'favicon/apple-icon-76x76.png' %}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{% static 'favicon/apple-icon-114x114.png' %}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{% static 'favicon/apple-icon-120x120.png' %}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{% static 'favicon/apple-icon-144x144.png' %}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{% static 'favicon/apple-icon-152x152.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-icon-180x180.png' %}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{% static 'favicon/android-icon-192x192.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{% static 'favicon/favicon-96x96.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'favicon/manifest.json' %}">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="{% static 'favicon/ms-icon-144x144.png' %}">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- SEO Meta Tags -->
+    <meta charset="utf-8">
+    <meta name="keywords" content="tripbuddy.sg,tripbuddy,trip,buddy,local,singapore,exchange,university,study,abroad,student,college">
+    <meta name="description" content="A truly local experience with local student guides, see Singapore like it was meant to be seen. Join us today!">
+
+    <!-- Facebook Meta Tags -->
+    <!-- TODO: Add 'content' for og:url & og:image below. -->
+    <meta property="og:url" content="<<Home Page URL>>" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="TripBuddy.sg" />
+    <meta property="og:title" content="Join Us!" />
+    <meta property="og:description" content="A truly local experience with local student guides, see Singapore like it was meant to be seen." />
+    <meta property="og:image" content="<<Absolute URL for Logo>>" />
+    <meta property="fb:app_id" content="1681340718812167" />
+
+    <!-- Twitter Meta Tags -->
+    <!-- TODO: Add 'content' for twitter:image below. -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:url" content="http://tripbuddy.sg">
+    <meta name="twitter:title" content="TripBuddy.SG">
+    <meta name="twitter:description" content="A truly local experience with local student guides, see Singapore like it was meant to be seen.">
+    <meta name="twitter:image" content="<<Absolute URL for Logo>>">
+
+    <title>TripBuddy.SG</title>
+</head>
+
+<body>
+    <div class="overflowWrap">
+
+        <!-- E-MAIL CHANGE MODAL -->
+        <div id="emailModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="emailModal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Would you like to change your e-mail?</h4>
+                    </div>
+                    <!-- Modal Body -->
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-4 col-sm-offset-4">
+                                <img src="{{user.customuser.profilePic}}" class="img-responsive img-thumbnail">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1">
+                                <h1>Welcome, {{user.get_full_name}}!</h1>
+                                <h2>Your current e-mail address is {{user.email}}. Would you like to change it?</h2>
+                            </div>
+                        </div>
+                        <form name="emailForm" class="form-horizontal" role="form" onsubmit="return validateForm()" action="" method="post" novalidate>
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-sm-8 col-sm-offset-2">
+                                        <input type="email" class="form-control" id="email" name="email" value="{{user.email}}" placeholder="e.g. john@doe.com" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row btn-row">
+                                <div class="col-md-3 col-md-offset-3">
+                                    <button type="submit" class="btn btn-success">CHANGE</button>
+                                </div>
+                                <div class="col-md-3">
+                                    <button class="btn btn-success" data-dismiss="modal">NOPE</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="alert alert-danger form-empty" role="alert">
+                            <strong>Oops!</strong> You haven't entered an e-mail address.
+                        </div>
+                        <div class="alert alert-warning form-invalid-email" role="alert">
+                            <strong>Oops!</strong> Not a valid e-mail address.
+                        </div>
+                        <div class="alert alert-success form-success" role="alert">
+                            <strong>Success!</strong> E-mail successfully changed.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if emailModal %}
+        <script>
+            $('#emailModal').modal('show');
+        </script>
+        {% endif %}
+
+
+        <!-- NAVBAR -->
+        {% include 'navbar.html' %}
+
+
+        <!-- JUMBOTRON -->
+        <div class="container-fluid home-jumbotron">
+            <div class="jumbotron-content">
+                <h1>EXCHANGE YOUR WORLD</h1>
+                <h2>A truly local experience with local student guides, see Singapore like it was meant to be seen.</h2>
+                <button class="btn btn-primary btn-jumbotron">HOW DOES IT WORK?</button>
+            </div>
+        </div>
+
+
+        <!-- HOME PAGE CONTENT -->
+        <div class="home-grid">
+            <!-- Trips Happening Soon Grid -->
+            <div class="grid-trips-soon">
+                <a href="{% url 'tripbuddy:view-all-trips' %}">
+                    <h1>HAPPENING SOON <i class="fa fa-plus"></i></h1>
+                </a>
+
+                <div class="container-fluid">
+                    <div class="row">
+                        {% if trips and trips.count > 0 %} {% for trip in trips %}
+                        <div class="col-sm-6 col-md-4">
+                            <div class="row">
+                                <div class="col-md-10 col-md-offset-1">
+                                    <a href="{% url 'tripbuddy:trip' trip.id %}">
+                                        <div class="trip-grid-link" style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url({{ trip.picture.url }}) no-repeat center center; background-size: cover;">
+                                            <p class="theme">{{trip.theme.title}}</p>
+                                            <p class="title">{{trip.title}}</p>
+                                            <p class="tagline">{{trip.tagline}}</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %} {% else %}
+                        <div class="err-search">
+                            <p>Sorry, no trips happening soon.</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- View All Trips Button -->
+                <div class="container-fluid view-all">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3">
+                            <a href="{% url 'tripbuddy:view-all-trips' %}">
+                                <button class="btn btn-primary btn-view-all">VIEW ALL TRIPS</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Themes Grid -->
+            <div class="grid-themes">
+                <h1>THEMES <i class="fa fa-plus"></i></h1>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1">
+                            <div class="row">
+                                {% if themes %} {% for theme in themes %}
+                                <a href="{% url 'tripbuddy:view-all-trips' %}?theme={{theme.title}}&price=Any+Price&date=Any+Date#">
+                                    <div class="col-md-2 col-sm-6">
+                                        <button class="btn btn-primary btn-theme">{{theme.title}}</button>
+                                    </div>
+                                </a>
+                                {% endfor %} {% else %}
+                                <div class="err-search">
+                                    <p>Sorry, no themes available at the moment.</p>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Promotional Video -->
+            <div id="promotional_video">
+                <a href="{% url 'tripbuddy:testimonials'%}">
+                    <h1>PAST EVENTS <i class="fa fa-plus"></i></h1>
+                </a>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1">
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/oNWBCNTzsMQ?controls=0;modestbranding=1;rel=0;showinfo=0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hosts Grid -->
+            <div class="grid-hosts">
+                <a href="{% url 'tripbuddy:view-all-hosts' %}"><h1>OUR HOSTS <i class="fa fa-plus"></i></h1></a>
+
+                <div class="container-fluid">
+                    <div class="row">
+                        {% if users %} {% for host in users %}
+                        <div class="col-sm-6 col-md-4">
+                            <div class="row">
+                                <div class="col-md-10 col-md-offset-1">
+                                    <div class="host-grid-link" style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url({{ host.customuser.profilePic }}) no-repeat center center; background-size: cover;">
+                                        <p class="tag">Host</p>
+                                        <p class="name">{{host.first_name}}</p>
+                                        <p class="tagline">{{host.hostdetail.tagline}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %} {% else %}
+                        <div class="err-search">
+                            <p>Sorry, we have no active hosts at the moment.</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- View All Hosts Button -->
+                <div class="container-fluid view-all">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3">
+                            <a href="{% url 'tripbuddy:view-all-hosts' %}">
+                                <button class="btn btn-primary btn-view-all">VIEW ALL HOSTS</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        {% include 'footer.html' %}
+
+    </div>
+</body>

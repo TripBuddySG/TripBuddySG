@@ -1,0 +1,257 @@
+{% load staticfiles %}
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}" />
+
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/validate-trip.js' %}"></script>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="{% static 'favicon/apple-icon-57x57.png' %}">
+    <link rel="apple-touch-icon" sizes="60x60" href="{% static 'favicon/apple-icon-60x60.png' %}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{% static 'favicon/apple-icon-72x72.png' %}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'favicon/apple-icon-76x76.png' %}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{% static 'favicon/apple-icon-114x114.png' %}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{% static 'favicon/apple-icon-120x120.png' %}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{% static 'favicon/apple-icon-144x144.png' %}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{% static 'favicon/apple-icon-152x152.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-icon-180x180.png' %}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{% static 'favicon/android-icon-192x192.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{% static 'favicon/favicon-96x96.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'favicon/manifest.json' %}">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="{% static 'favicon/ms-icon-144x144.png' %}">
+    <meta name="theme-color" content="#ffffff">
+
+    <title>Create a Trip | TripBuddy.SG</title>
+</head>
+
+<body>
+    <div class="overflowWrap">
+
+        <!-- NAVBAR -->
+        {% include 'navbar.html' %}
+
+
+        <!-- JUMBOTRON -->
+        <div class="new-trip-jumbotron">
+            <div class="jumbotron-content">
+                <h1>HOST A TRIP</h1>
+                <h3>MAKE FRIENDS FROM AROUND THE WORLD, TAKE THEM AROUND SINGAPORE &amp; GET REWARDED IN THE PROCESS</h3>
+                <a href="#trip_form">
+                    <button class="btn btn-success btn-join">I'M IN! <i class="fa fa-angle-down"></i></button>
+                </a>
+            </div>
+        </div>
+
+
+        <!-- NEW TRIP FORM -->
+        <div class="container-fluid" id="trip_form">
+            <div class="row">
+                <form name="tripForm" class="form-horizontal" role="form" onsubmit="return validateForm()" action="#" method="post" enctype="multipart/form-data" novalidate>
+                    {% csrf_token %}
+                    <div class="general-info">
+                        <h1>GENERAL INFO</h1>
+                        <div class="form-group">
+                            <label class="control-label col-md-2 col-md-offset-1" for="title">Title of Trip:</label>
+                            <div class="col-md-7">
+                                <input type="text" class="form-control" id="title" name="title" placeholder="Make this short &amp; catchy!" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2 col-md-offset-1" for="tagline">Tagline for Trip:</label>
+                            <div class="col-md-7">
+                                <input type="text" class="form-control" id="tagline" name="tagline" placeholder="Make this short &amp; catchy as well! e.g. A night of music, food &amp; drinks!" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2 col-md-offset-1" for="pic">Any Related Image:</label>
+                            <div class="col-md-7">
+                                <input type="file" class="form-control" id="pic" name="pic" accept="image/*" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2 col-md-offset-1" for="overview">Overview of Trip:</label>
+                            <div class="col-md-7">
+                                <textarea type="text" rows="5" class="form-control" id="overview" name="overview" placeholder="Why should someone join this trip? What are you going to do? Make this as attractive as possible!" required></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2 col-md-offset-1" for="itinerary">Itinerary of Trip:</label>
+                            <div class="col-md-7">
+                                <textarea type="text" rows="8" class="form-control" id="itinerary" name="itinerary" placeholder="Provide as many details as possible about what you're going to do, where you're going to do it and how you're going to get there. Remember that people tend to like a more detailed itinerary as compared to a vague one! e.g. 12:00 - 14:00: Lunch at Gardens by the Bay." required></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="more-details">
+                        <h1>DETAILS OF THE TRIP</h1>
+                        <div class="form-group">
+                            <label class="control-label col-md-2 col-md-offset-1" for="date">Date of Trip:</label>
+                            <div class="col-md-7">
+                                <input type="date" class="form-control" id="date" name="date" placeholder="When will you be taking your trip participants? (YYYY-MM-DD)" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-12 col-md-2 col-md-offset-1" for="time">Time of Trip:</label>
+                            <div class="col-xs-5 col-sm-2 col-md-3">
+                                <input type="time" class="form-control" id="time_start" name="time_start" placeholder="Start Time (HH:MM)" required>
+                            </div>
+                            <div class="col-xs-2 col-sm-2 col-md-1 mid-label">
+                                <p>to</p>
+                            </div>
+                            <div class="col-xs-5 col-sm-2 col-md-3">
+                                <input type="time" class="form-control" id="time_end" name="time_end" placeholder="End Time (HH:MM)" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2 col-md-offset-1" for="location">Location of Trip:</label>
+                            <div class="col-md-7">
+                                <input type="text" class="form-control" id="location" name="location" placeholder="Where will you be taking your trip participants?" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-12 col-md-2 col-md-offset-1" for="group_size">Group Size:</label>
+                            <div class="col-xs-5 col-sm-5 col-md-3">
+                                <input type="number" class="form-control" id="min_group" name="min_group" placeholder="Minimum Pax" required>
+                            </div>
+                            <div class="col-xs-2 col-sm-2 col-md-1 mid-label">
+                                <p>-</p>
+                            </div>
+                            <div class="col-xs-5 col-sm-5 col-md-3">
+                                <input type="number" class="form-control" id="max_group" name="max_group" placeholder="Maximum Pax" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2 col-md-offset-1" for="price">Price per Person (SGD):</label>
+                            <div class="col-md-7">
+                                <input type="number" class="form-control" id="price" name="price" placeholder="How much will you be charging per person?" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-12 col-md-2 col-md-offset-1" for="itemsList">Items to Bring:</label>
+                            <div class="col-xs-10 col-sm-11 col-md-7">
+                                <ul class="items-arr">
+                                    <li>
+                                        <input type="text" class="form-control" name="items" id="items" placeholder="What items should a tripper bring? Eg. IC, Umbrella">
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-xs-2 col-sm-1 col-md-1">
+                                <button type="button" class="btn btn-success btn-add" id="addItems">+</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-12 col-md-2 col-md-offset-1" for="includes">Includes:</label>
+                            <div class="col-xs-10 col-sm-11 col-md-7">
+                                <ul class="includes-arr">
+                                    <li>
+                                        <input type="text" class="form-control" name="includes" id="includes" placeholder="What does your price include? Eg. Entry Fee">
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-xs-2 col-sm-1 col-md-1">
+                                <button type="button" class="btn btn-success btn-add" id="addIncludes">+</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-12 col-md-2 col-md-offset-1" for="excludes">Excludes:</label>
+                            <div class="col-xs-10 col-sm-11 col-md-7">
+                                <ul class="excludes-arr">
+                                    <li>
+                                        <input type="text" class="form-control" name="excludes" id="excludes" placeholder="What does your price exclude? Eg. Cab Fare">
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-xs-2 col-sm-1 col-md-1">
+                                <button type="button" class="btn btn-success btn-add" id="addExcludes">+</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2 col-md-offset-1" for="transportation">Transportation:</label>
+                            <div class="col-md-7">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" name="transport_walk" value="Walking">Walking</label>
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" name="transport_public" value="Public Transportation">Public Transportation</label>
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" name="transport_cab" value="Cab">Cab</label>
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" name="transport_car" value="Private Car">Private Car</label>
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" name="transport_bus" value="Chartered Minibus/Bus">Chartered Minibus/Bus</label>
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" name="transport_other" value="Other">Other</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2 col-md-offset-1" for="theme">Theme:</label>
+                            <div class="col-md-7">
+                                <select class="form-control" id="theme" name="theme" required>
+                                    <!-- NOTE: Keep the first blank option for validation. -->
+                                    <option></option>
+                                    {%for theme in themes%}
+                                    <option>{{ theme.title }}</option>
+                                    {%endfor%}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container-fluid publish">
+                        <div class="row">
+                            <div class="col-md-4 col-md-offset-4">
+                                <button type="submit" class="btn btn-success btn-publish">PUBLISH TRIP</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="alert alert-danger form-empty" role="alert">
+                            <strong>Oops!</strong> All fields are required.
+                        </div>
+                        <div class="alert alert-warning form-invalid-title" role="alert">
+                            <strong>Oops!</strong> The title of your trip can't exceed 30 characters.
+                        </div>
+                        <div class="alert alert-warning form-invalid-tagline" role="alert">
+                            <strong>Oops!</strong> The tagline of your trip can't exceed 100 characters.
+                        </div>
+                        <div class="alert alert-warning form-invalid-date" role="alert">
+                            <strong>Oops!</strong> It seems like your entered date has already passed.
+                        </div>
+                        <div class="alert alert-warning form-invalid-time" role="alert">
+                            <strong>Oops!</strong> Please check your times again.
+                        </div>
+                        <div class="alert alert-warning form-invalid-group-size" role="alert">
+                            <strong>Oops!</strong> It seems like you have switched your minimum &amp; maximum group size.
+                        </div>
+                        <div class="alert alert-warning form-invalid-price" role="alert">
+                            <strong>Oops!</strong> Sorry, we currently don't support trips costing over SGD 500.
+                        </div>
+                        <div class="alert alert-warning form-invalid-checkbox" role="alert">
+                            <strong>Oops!</strong> Please select at least one form of transportation.
+                        </div>
+                        <div class="alert alert-success form-success" role="alert">
+                            <strong>Success!</strong> Your trip has been published!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- FOOTER -->
+        {% include 'footer.html' %}
+    </div>
+</body>

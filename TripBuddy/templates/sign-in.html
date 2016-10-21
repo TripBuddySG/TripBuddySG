@@ -1,0 +1,102 @@
+{% load staticfiles %}
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}" />
+
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="{% static 'favicon/apple-icon-57x57.png' %}">
+    <link rel="apple-touch-icon" sizes="60x60" href="{% static 'favicon/apple-icon-60x60.png' %}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{% static 'favicon/apple-icon-72x72.png' %}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'favicon/apple-icon-76x76.png' %}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{% static 'favicon/apple-icon-114x114.png' %}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{% static 'favicon/apple-icon-120x120.png' %}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{% static 'favicon/apple-icon-144x144.png' %}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{% static 'favicon/apple-icon-152x152.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-icon-180x180.png' %}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{% static 'favicon/android-icon-192x192.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{% static 'favicon/favicon-96x96.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'favicon/manifest.json' %}">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="{% static 'favicon/ms-icon-144x144.png' %}">
+    <meta name="theme-color" content="#ffffff">
+
+    <title>Sign In | TripBuddy.SG</title>
+</head>
+
+<body>
+    <div class="overflowWrap" style="height: 100%; background: #e8f7fd;">
+
+        <!-- SIGN IN FORM -->
+        <div class="sign-in-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4 sign-in-logo">
+                        <a href="{% url 'tripbuddy:index' %}"><img src="{% static 'img/logo.png' %}" class="img-responsive"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4 sign-in-buttons">
+                        <div class="row">
+                            {% if link %}
+                                <a href="{% url 'social:begin' 'facebook'%}?next={{request.path}}?next={{link}}">
+                                    <button class="btn btn-primary btn-sign-in-fb"><span class="fa fa-facebook-official"></span>&nbsp; SIGN IN WITH FACEBOOK</button>
+                                </a>
+                            {% else %}
+                                <a href="{% url 'social:begin' 'facebook'%}?next={{request.path}}?next=/">
+                                    <button class="btn btn-primary btn-sign-in-fb"><span class="fa fa-facebook-official"></span>&nbsp; SIGN IN WITH FACEBOOK</button>
+                                </a>
+                            {% endif %}
+                        </div>
+                        <!-- FUTURE: Multiple social media sign-in. -->
+                        <!--
+                        <div class="row">
+                            <button class="btn btn-primary btn-sign-in-tw"><span class="fa fa-twitter"></span>&nbsp; SIGN IN WITH TWITTER</button>
+                        </div>
+                        <div class="row">
+                            <button class="btn btn-primary btn-sign-in-go"><span class="fa fa-google"></span>&nbsp; SIGN IN WITH GOOGLE</button>
+                        </div>
+                        -->
+
+                        <p>By signing in, you agree to our Terms of Service and Privacy Policy, found <a href="{% url 'tripbuddy:legal' %}">here</a>.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid hidden-xs">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-md-offset-3 sign-in-footer">
+                        <div class="row">
+                            <div class="col-sm-3 col-sm-offset-2 col-md-3 col-md-offset-2">
+                                <a href="{% url 'tripbuddy:legal' %}">
+                                    <p>Privacy Policy</p>
+                                </a>
+                            </div>
+                            <div class="col-sm-2 col-md-2">
+                                <p>&#8226;</p>
+                            </div>
+                            <div class="col-sm-3 col-md-3">
+                                <a href="{% url 'tripbuddy:legal' %}">
+                                    <p>Terms of Service</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
