@@ -1,0 +1,146 @@
+{% load staticfiles %}
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'flaticons/flaticon.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}" />
+
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="{% static 'favicon/apple-icon-57x57.png' %}">
+    <link rel="apple-touch-icon" sizes="60x60" href="{% static 'favicon/apple-icon-60x60.png' %}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{% static 'favicon/apple-icon-72x72.png' %}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'favicon/apple-icon-76x76.png' %}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{% static 'favicon/apple-icon-114x114.png' %}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{% static 'favicon/apple-icon-120x120.png' %}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{% static 'favicon/apple-icon-144x144.png' %}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{% static 'favicon/apple-icon-152x152.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-icon-180x180.png' %}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{% static 'favicon/android-icon-192x192.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{% static 'favicon/favicon-96x96.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'favicon/manifest.json' %}">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="{% static 'favicon/ms-icon-144x144.png' %}">
+    <meta name="theme-color" content="#ffffff">
+
+    <title>Why Host? | TripBuddy.SG</title>
+</head>
+
+<body>
+    <div class="overflowWrap">
+
+        <!-- NAVBAR -->
+        {% include 'navbar.html' %}
+
+
+        <!-- JUMBOTRON -->
+        <div class="container-fluid why-host-jumbotron">
+            <div class="jumbotron-content">
+                <h1>WHY HOST?</h1>
+                <h2>An opportunity to grow a global network without leaving the island.</h2>
+            </div>
+        </div>
+
+
+        <!-- WHY HOST CONTENT -->
+        <div class="container-fluid why-host-incentives">
+            <div class="row">
+                <h1>Hosting. It's <span class="why-host-awesome">AWESOME</span>.</h1>
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4">
+                            <i class="flaticon-group58"></i>
+                            <h2>Make New Friends &amp; Bring Them Joy</h2>
+                        </div>
+                        <div class="col-sm-4 col-md-4">
+                            <i class="flaticon-earth53"></i>
+                            <h2>Create a Global Network</h2>
+                        </div>
+                        <div class="col-sm-4 col-md-4">
+                            <i class="flaticon-payment7"></i>
+                            <h2>Get Rewarded For Your Efforts</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-2">
+                        <a href="{% url 'tripbuddy:testimonials' %}">
+                            <button class="btn btn-success">READ STORIES FROM PAST HOSTS</button>
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="{% url 'tripbuddy:view-all-trips' %}">
+                            <button class="btn btn-success">SEE CURRENT TRIPS</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid why-host-instructions">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>How do I host a trip?</h1>
+                </div>
+                <div class="col-sm-6 col-md-2">
+                    <i class="flaticon-symbol20"></i>
+                    <h2>1. Sign Up &amp; Register as a Host</h2>
+                </div>
+                <div class="col-sm-6 col-md-2">
+                    <i class="flaticon-pencil41"></i>
+                    <h2>2. Create a Trip</h2>
+                </div>
+                <div class="col-sm-6 col-md-2">
+                    <i class="flaticon-upload5"></i>
+                    <h2>3. Upload a Photo</h2>
+                </div>
+                <div class="col-sm-6 col-md-2">
+                    <i class="flaticon-send4"></i>
+                    <h2>4. Publish the Trip</h2>
+                </div>
+                <div class="col-sm-6 col-md-2">
+                    <i class="flaticon-clock125"></i>
+                    <h2>5. Play the Waiting Game</h2>
+                </div>
+                <div class="col-sm-6 col-md-2">
+                    <i class="flaticon-glasses35"></i>
+                    <h2>6. Host Your New Friends!</h2>
+                </div>
+                <div class="col-md-6 col-md-offset-3">
+                    <btn href="{% url 'tripbuddy:new-trip' %}" class="btn btn-success">HOST A TRIP</btn>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid why-host-limits">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>What kind of trip can I host?</h1>
+                </div>
+                <div class="col-md-12">
+                    <h3>ANYTHING</h3>
+                    <h4>The only bounds are your imagination &amp; creativity</h4>
+                </div>
+                <div class="col-md-8 col-md-offset-2">
+                    <p>In the ever changing world of the Internet, we see the world being more connected than ever. However, this connectivity has come at a cost to us. We have lost the ability to start a conversation with any stranger around us. We, at TripBuddy.sg, are passionate about providing a truly local experience to our fellow exchange students in a way that has never been explored before. Along with this, we also offer our fellow NTU students the opportunity to network with the world without leaving the comfort of Singapore. The best part &#8212; you get extra pocket money too!</p>
+
+                    <p>Think about it like a part-time job (with no bosses or administrative hassles) or an opportunity to promote your CCAs. We believe in lubricating the process of making new friends from around the world in the hopes that people might make lifelong friends in the process.</p>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- FOOTER -->
+        {% include 'footer.html' %}
+    </div>
+</body>

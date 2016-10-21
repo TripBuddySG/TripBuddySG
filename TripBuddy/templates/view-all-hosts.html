@@ -1,0 +1,195 @@
+{% load staticfiles %}
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}" />
+
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/paginate-hosts.js' %}"></script>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="{% static 'favicon/apple-icon-57x57.png' %}">
+    <link rel="apple-touch-icon" sizes="60x60" href="{% static 'favicon/apple-icon-60x60.png' %}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{% static 'favicon/apple-icon-72x72.png' %}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'favicon/apple-icon-76x76.png' %}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{% static 'favicon/apple-icon-114x114.png' %}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{% static 'favicon/apple-icon-120x120.png' %}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{% static 'favicon/apple-icon-144x144.png' %}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{% static 'favicon/apple-icon-152x152.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-icon-180x180.png' %}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{% static 'favicon/android-icon-192x192.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{% static 'favicon/favicon-96x96.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'favicon/manifest.json' %}">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="{% static 'favicon/ms-icon-144x144.png' %}">
+    <meta name="theme-color" content="#ffffff">
+
+    <title>Our Hosts | TripBuddy.SG</title>
+</head>
+
+<body>
+    <div class="overflowWrap">
+
+
+        <!-- NAVBAR -->
+        {% include 'navbar.html' %}
+
+
+        <!-- JUMBOTRON -->
+        <div class="container-fluid hosts-jumbotron">
+            <div class="jumbotron-content">
+                <h1>OUR AMAZING HOSTS</h1>
+                <h2>They're interesting, passionate and love meeting new people.</h2>
+            </div>
+        </div>
+
+
+        <!-- HOST MODAL -->
+        {% for host in users %}
+        <div id="hostModal_{{forloop.counter}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="hostModal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">{{ host.user.get_full_name }}</h4>
+                    </div>
+
+                    <!-- Modal Body -->
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-4 col-md-3">
+
+                                <img src="{{ host.user.customuser.profilePic }}" class="img-responsive img-thumbnail">
+                            </div>
+
+                            <div class="col-sm-8 col-md-8">
+                                <h3>{{ host.user.get_full_name }}</h3>
+                                <h4>{{ host.course }}, Year {{host.year}}</h4>
+                                <h4>{{ host.school }}</h4>
+                                <h4>{{ host.university }}</h4>
+                                <p>{{ host.description }}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <h6>Some Trips Hosted by {{ host.user.first_name }}:</h6>
+                        </div>
+                        <div class="trip-grid">
+                            <div class="container-fluid">
+                                <div class="row">
+
+                                    {% for key, value in trips.items %} {% if key == host.user.username %} {% if not value %}
+                                    <div class="col-md-12 err-host">
+                                        <p>{{host.user.first_name}} hasn't hosted any trips yet.</p>
+                                    </div>
+                                    {%else%} {% for trip in value %}
+                                    <div class="col-md-4">
+                                        <a href="{% url 'tripbuddy:trip' trip.id %}">
+                                            <div class="row">
+                                                <div class="col-md-10 col-md-offset-1">
+                                                    <div class="trip-grid-link" style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url({{ trip.picture.url }}) no-repeat center center; background-size: cover;">
+                                                        <p class="theme">{{ trip.theme.title }}</p>
+                                                        <p class="title">{{ trip.title }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    {% endfor %} {%endif%} {% endif %} {%endfor%}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal Footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+
+        <!-- HOSTS GRID -->
+        <div class="hosts-view">
+            <div class="container-fluid hosts-filters">
+                <div class="row">
+                    <form class="form-inline" role="form" action="" method="get">
+                        <div class="col-sm-6 col-md-3 col-md-offset-3 form-group">
+                            <select class="form-control" id="university" name="university" onchange="this.form.submit()">
+                                <!-- NOTE: Keep the first option. -->
+                                <option value="Any University">Any University</option>
+                                <option value="Nanyang Technological University" {% if uniNext == 'Nanyang Technological University' %} selected {% endif %}>Nanyang Technological University</option>
+                                <option value="National University of Singapore" {% if uniNext == 'National University of Singapore' %} selected {% endif %}>National University of Singapore</option>
+                                <option value="Singapore Management University" {% if uniNext == 'Singapore Management University' %} selected {% endif %}>Singapore Management University</option>
+                            </select>
+                            <noscript>
+                                <input type="submit" value="Submit">
+                            </noscript>
+                        </div>
+                        <div class="col-sm-6 col-md-3 form-group">
+                            <select class="form-control" id="school" name="school" onchange="this.form.submit()">
+                                <!-- NOTE: Keep the first option. -->
+                                <option value="Any School">Any School</option>
+                                {% for school in schools%}
+                                <option value="{{school}}" {% if school == schoolNext %} selected {%endif%}> {{school}} </option>
+                                {%endfor%}
+                            </select>
+                            <noscript>
+                                <input type="submit" value="Submit">
+                            </noscript>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <input type='hidden' id='current_page' />
+            <input type='hidden' id='show_per_page' />
+
+            <div class="container-fluid">
+                <div class="row" id="hosts-grid">
+                    {%if users%} {% for host in users %}
+                    <div class="col-sm-6 col-md-4 clickable">
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1">
+                                <a data-toggle="modal" data-target="#hostModal_{{forloop.counter}}">
+                                    <div class="host-grid-link" style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url({{ host.user.customuser.profilePic }}) no-repeat center center; background-size: cover;">
+                                        <p class="tag">Host</p>
+                                        <p class="name">{{ host.user.first_name }}</p>
+                                        <p class="tagline">{{ host.tagline }}</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %} {%else%}
+                    <div class="col-md-10 col-md-offset-1 err-search">
+                        <p>Sorry, no hosts match your search.</p>
+                    </div>
+                    {%endif%}
+                </div>
+            </div>
+
+            <div class="container-fluid host-nav-row">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3" id="host_page_nav"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- FOOTER -->
+        {% include 'footer.html' %}
+    </div>
+</body>

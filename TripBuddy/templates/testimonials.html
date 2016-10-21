@@ -1,0 +1,88 @@
+{% load staticfiles %}
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}" />
+
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="{% static 'favicon/apple-icon-57x57.png' %}">
+    <link rel="apple-touch-icon" sizes="60x60" href="{% static 'favicon/apple-icon-60x60.png' %}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{% static 'favicon/apple-icon-72x72.png' %}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'favicon/apple-icon-76x76.png' %}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{% static 'favicon/apple-icon-114x114.png' %}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{% static 'favicon/apple-icon-120x120.png' %}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{% static 'favicon/apple-icon-144x144.png' %}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{% static 'favicon/apple-icon-152x152.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-icon-180x180.png' %}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{% static 'favicon/android-icon-192x192.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{% static 'favicon/favicon-96x96.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'favicon/manifest.json' %}">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="{% static 'favicon/ms-icon-144x144.png' %}">
+    <meta name="theme-color" content="#ffffff">
+
+    <title>Testimonials | TripBuddy.SG</title>
+</head>
+
+<body>
+    <div class="overflowWrap">
+
+        <!-- NAVBAR -->
+        {% include 'navbar.html' %}
+
+
+        <!-- JUMBOTRON -->
+        <div class="container-fluid testimonials-jumbotron">
+            <div class="jumbotron-content">
+                <h1>TESTIMONIALS</h1>
+                <h2>The greatest hosts. The happiest customers.</h2>
+            </div>
+        </div>
+
+
+        <!-- TESTIMONIALS CONTENT -->
+        <div class="container-fluid testimonials-content">
+            <div class="row">
+                <div class="col-xs-12 col-xs-offset-0 col-sm-12 col-sm-offset-0 col-md-10 col-md-offset-1">
+                    <div class="row">
+                        {%if testimonials%} {% for testimonial in testimonials %}
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="row testimonial-user">
+                                <div class="col-xs-3 col-xs-offset-1 col-sm-4 col-sm-offset-0 col-md-3 col-md-offset-1 testimonial-pic" style="background-image: url({{ testimonial.user.customuser.profilePic}})"></div>
+                                <div class="col-xs-7 col-sm-8 col-md-8">
+                                    <h5>{{testimonial.user.get_full_name}}</h5> {% if testimonial.user.hostdetail %}
+                                    <h6>Host</h6> {% else %}
+                                    <h6>Trip Participant</h6> {% endif %}
+                                </div>
+                            </div>
+                            <div class="testimonial-text">
+                                <span class="fa fa-quote-left fa-2x"></span>
+                                <p>{{testimonial.testimonial}}</p>
+                            </div>
+                        </div>
+                        {%endfor%} {%else%}
+                        <div class="col-md-10 col-md-offset-1 err-search">
+                            <p>Sorry, no testimonials available at the moment.</p>
+                        </div>
+                        {%endif%}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- FOOTER -->
+        {% include 'footer.html' %}
+    </div>
+</body>

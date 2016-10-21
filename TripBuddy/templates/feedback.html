@@ -1,0 +1,113 @@
+{% load staticfiles %}
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}" />
+
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/jquery.scrollTo.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/validate-feedback.js' %}"></script>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="{% static 'favicon/apple-icon-57x57.png' %}">
+    <link rel="apple-touch-icon" sizes="60x60" href="{% static 'favicon/apple-icon-60x60.png' %}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{% static 'favicon/apple-icon-72x72.pn' %}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'favicon/apple-icon-76x7' %}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{% static 'favicon/apple-icon-114x114.png' %}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{% static 'favicon/apple-icon-120x120.png' %}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{% static 'favicon/apple-icon-144x144.png' %}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{% static 'favicon/apple-icon-152x152.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-icon-180x180.png' %}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{% static 'favicon/android-icon-192x192.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{% static 'favicon/favicon-96x96.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'favicon/manifest.json' %}">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="{% static 'favicon/ms-icon-144x144.png' %}">
+    <meta name="theme-color" content="#ffffff">
+
+    <title>Feedback | TripBuddy.SG</title>
+</head>
+
+<body>
+    <div class="overflowWrap">
+
+        <!-- NAVBAR -->
+        {% include 'navbar.html'%}
+
+
+        <!-- JUMBOTRON -->
+        <div class="container-fluid feedback-jumbotron">
+            <div class="jumbotron-content">
+                <h1>FEEDBACK</h1>
+                <h2>Got a suggestion? Or a complaint? Let us know!</h2>
+            </div>
+        </div>
+
+
+        <!-- FEEDBACK FORM & CONTACT DETAILS -->
+        <div class="container-fluid feedback-content">
+            <div class="row">
+                <div class="col-md-8 feedback-form">
+                    <h1>WE WANT TO HEAR YOU</h1>
+                    <form name="feedbackForm" class="form-horizontal" role="form" onsubmit="return validateForm()" action="" method="post" novalidate>
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="name">Name:</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="name" name="name" placeholder="e.g. John Doe" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="email">E-Mail:</label>
+                            <div class="col-md-9">
+                                <input type="email" class="form-control" id="email" name="email" placeholder="e.g. john@doe.com" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="feedback">Feedback:</label>
+                            <div class="col-md-9">
+                                <textarea type="text" rows="5" class="form-control" id="feedback" name="feedback" required></textarea>
+                            </div>
+                        </div>
+                        <div class="container-fluid feedback-send">
+                            <div class="row">
+                                <button type="submit" class="btn btn-success btn-feedback">SEND FEEDBACK</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <div class="alert alert-danger form-empty" role="alert">
+                                <strong>Oops!</strong> All fields are required.
+                            </div>
+                            <div class="alert alert-warning form-invalid-email" role="alert">
+                                <strong>Oops!</strong> Not a valid e-mail address.
+                            </div>
+                            <div class="alert alert-success form-success" role="alert">
+                                <strong>Success!</strong> Your feedback has been recorded.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 feedback-contact">
+                    <h1>GET IN TOUCH</h1>
+                    <h3><i class="fa fa-phone"></i> +65 9380 8437</h3>
+                    <h3><i class="fa fa-envelope"></i> contact@tripbuddy.sg</h3>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- FOOTER -->
+        {%include 'footer.html'%}
+    </div>
+</body>

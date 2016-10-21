@@ -1,0 +1,138 @@
+{% load staticfiles %}
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}" />
+
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/paginate-trips.js' %}"></script>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="{% static 'favicon/apple-icon-57x57.png' %}">
+    <link rel="apple-touch-icon" sizes="60x60" href="{% static 'favicon/apple-icon-60x60.png' %}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{% static 'favicon/apple-icon-72x72.png' %}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'favicon/apple-icon-76x76.png' %}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{% static 'favicon/apple-icon-114x114.png' %}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{% static 'favicon/apple-icon-120x120.png' %}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{% static 'favicon/apple-icon-144x144.png' %}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{% static 'favicon/apple-icon-152x152.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-icon-180x180.png' %}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{% static 'favicon/android-icon-192x192.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{% static 'favicon/favicon-96x96.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'favicon/manifest.json' %}">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="{% static 'favicon/ms-icon-144x144.png' %}">
+    <meta name="theme-color" content="#ffffff">
+
+    <title>Our Trips | TripBuddy.SG</title>
+</head>
+
+<body>
+    <div class="overflowWrap">
+
+        <!-- NAVBAR -->
+        {% include 'navbar.html' %}
+
+
+        <!-- JUMBOTRON -->
+        <div class="container-fluid trips-jumbotron">
+            <div class="jumbotron-content">
+                <h1>OUR HANDCRAFTED TRIPS</h1>
+                <h2>Pick an adventure, any adventure.</h2>
+            </div>
+        </div>
+
+
+        <!-- TRIPS GRID -->
+        <div class="trips-view">
+            <div class="container-fluid trips-filters">
+                <div class="row">
+                    <form class="form-inline" role="form" action="" method="get">
+                        <div class="col-sm-4 col-sm-offset-0 col-md-2 col-md-offset-3 form-group">
+                            <select class="form-control" id="theme" name="theme" onchange="this.form.submit()">
+                                <!-- NOTE: Keep the first option. -->
+                                <option>Any Theme</option>
+                                {% for theme in themes %}
+                                <option value={{ theme.title }} {% if themeNext == theme.title %} selected {%endif%}>{{ theme.title }}</option>
+                                {%endfor%}
+                            </select>
+                            <noscript>
+                                <input type="submit" value="Submit">
+                            </noscript>
+                        </div>
+                        <div class="col-sm-4 col-md-2 form-group">
+                            <select class="form-control" id="price" name="price" onchange="this.form.submit()">
+                                <!-- NOTE: Keep the first option. -->
+                                <option value="Any Price">Any Price</option>
+                                <option value='x<20' {% if priceNext == 'x<20' %} selected {%endif%}>Less Than 20</option>
+                                <option value='20<x<50' {% if priceNext == '20<x<50' %} selected {%endif%}>Between 20 and 50</option>
+                                <option value='50<x<80' {% if priceNext == '50<x<80' %} selected {%endif%}>Between 50 and 80</option>
+                                <option value='x>80' {% if priceNext == 'x>80' %} selected {%endif%}>Greater than 80</option>
+                            </select>
+                            <noscript>
+                                <input type="submit" value="Submit">
+                            </noscript>
+                        </div>
+                        <div class="col-sm-4 col-md-2 form-group">
+                            <select class="form-control" id="date" name="date" onchange="this.form.submit()">
+                                <!-- NOTE: Keep the first option. -->
+                                <option value="Any Date">Any Date</option>
+                                {% for d in date_arr %}
+                                <option value={{d.isoformat}} {% if dateNext == d.isoformat %} selected {%endif%}>{{ d }}</option>
+                                {% endfor %}
+                            </select>
+                            <noscript>
+                                <input type="submit" value="Submit">
+                            </noscript>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <input type='hidden' id='current_page' />
+            <input type='hidden' id='show_per_page' /> {% if not trips %}
+            <div class="col-md-10 col-md-offset-1 err-search">
+                <p>Sorry, no trips match your search.</p>
+            </div>
+            {% else %}
+            <div class="container-fluid">
+                <div class="row" id="trips-grid">
+                    {% for trip in trips %}
+                    <div class="col-sm-6 col-md-4">
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1">
+                                <a href="{% url 'tripbuddy:trip' trip.id %}">
+                                    <div class="trip-grid-link" style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url({{trip.picture.url}}) no-repeat center center; background-size: cover;">
+                                        <p class="theme">{{trip.theme}}</p>
+                                        <p class="title">{{trip.title}}</p>
+                                        <p class="tagline">{{trip.tagline}}</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="container-fluid trip-nav-row">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3" id="trip_page_nav"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        {% include 'footer.html' %}
+    </div>
+</body>

@@ -1,0 +1,341 @@
+{% load staticfiles %}
+{% load tripbuddy_extras %}
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}" />
+
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+
+    <!-- Tooltip Init -->
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="{% static 'favicon/apple-icon-57x57.png' %}">
+    <link rel="apple-touch-icon" sizes="60x60" href="{% static 'favicon/apple-icon-60x60.png' %}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{% static 'favicon/apple-icon-72x72.png' %}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'favicon/apple-icon-76x76.png' %}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{% static 'favicon/apple-icon-114x114.png' %}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{% static 'favicon/apple-icon-120x120.png' %}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{% static 'favicon/apple-icon-144x144.png' %}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{% static 'favicon/apple-icon-152x152.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-icon-180x180.png' %}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{% static 'favicon/android-icon-192x192.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{% static 'favicon/favicon-96x96.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'favicon/manifest.json' %}">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="{% static 'favicon/ms-icon-144x144.png' %}">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- TODO: Add 'content' for meta tags below. -->
+    <meta property="og:url" content="<<Trip URL>>" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="TripBuddy.sg" />
+    <meta property="og:title" content="<<Trip Name>>" />
+    <meta property="og:description" content="<<Trip Tagline>>" />
+    <meta property="og:image" content="<<Trip Image Absolute URL>>" />
+    <meta property="fb:app_id" content="1681340718812167" />
+
+    <title>Trip {{ trip.title }} | TripBuddy.SG</title>
+</head>
+
+<body>
+    <div class="overflowWrap">
+
+        <!-- NAVBAR -->
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
+                        <span class="sr-only">Toggle Navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="{% url 'tripbuddy:index' %}" class="pull-left"><img class="navbar-img" src="{% static 'img/logo_navbar.png' %}"></a>
+                </div>
+                <div id="navbarCollapse" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#trip_overview">OVERVIEW</a>
+                        </li>
+                        <li><a href="#trip_itinerary">ITINERARY</a>
+                        </li>
+                        <li><a href="#trip_details">DETAILS</a>
+                        </li>
+                        <li><a href="#trip_host">THE HOST</a>
+                        </li>
+                        {% if user == trip.host %}
+                        <li><a href="#trip_join" id="nav_join_trip"><i class="fa fa-group"></i> HOSTING</a>
+                        </li>
+                        {% elif user in trip.custs.all %}
+                        <li><a href="#trip_join" id="nav_join_trip"><i class="fa fa-check-circle"></i> JOINED</a>
+                        </li>
+                        {% else %}
+                        <li><a href="#trip_join" id="nav_join_trip"><i class="fa fa-plus-circle"></i> JOIN TRIP</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+        <!-- TRIP JUMBOTRON -->
+        <div class="trip-jumbotron">
+            <div class="jumbotron-content">
+                <h1>{{ trip.title }}</h1>
+                <h3>{{ trip.tagline }}</h3>
+                <h4>Hosted by {{ trip.host.get_full_name }}</h4> {% if user == trip.host %}
+                <button class="btn btn-success btn-joined"><i class="fa fa-group"></i> HOSTING</button>
+                {% elif user in trip.custs.all %}
+                <button class="btn btn-success btn-joined"><i class="fa fa-check-circle"></i> JOINED</button>
+                {% else %}
+                <a href="#trip_join">
+                    <button class="btn btn-success btn-join"><i class="fa fa-plus-circle"></i> JOIN</button>
+                </a>
+                {% endif %}
+                <!-- TODO: Add FB Share button -->
+            </div>
+        </div>
+
+
+        <!-- OVERVIEW -->
+        <div class="container-fluid trip-overview" id="trip_overview">
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3 col-md-3 col-md-offset-2">
+                    <img src="{{ trip.picture.url }}" class="img-responsive img-thumbnail">
+                </div>
+                <div class="col-sm-10 col-sm-offset-1 col-md-5 col-md-offset-0">
+                    <h1>OVERVIEW</h1>
+                    <p>{{ trip.overview }}</p>
+                    <h1 id="trip_itinerary">ITINERARY</h1>
+                    <p>{{ trip.itinerary }}</p>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- SEPARATOR -->
+        <hr class="trip-separator">
+
+
+        <!-- TRIP DETAILS -->
+        <div class="container-fluid trip-details" id="trip_details">
+            <div class="row">
+                <div class="col-md-3 col-md-offset-1">
+                    <div class="row">
+                        <h3>WHO'S GOING</h3>
+                    </div>
+                    {%if trip.custs.all %}
+                    <div class="row trip-user-list">
+                        {% for cust in trip.custs.all %}
+                        <div class="col-md-3 col-xs-3">
+                            <a href="{{cust.customuser.link}}" target="_blank" data-toggle="tooltip" data-placement="top" title="{{ cust.get_full_name }}"><img src="{{ cust.customuser.profilePic }}" class="img-responsive trip-user-img"></a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% elif user == trip.host  %}
+                    <div class="row err-search">
+                        <p>Nobody's joined this trip yet.</p>
+                    </div>
+                    {% else %}
+                    <div class="row err-search">
+                        <p>Nobody's joined this trip yet.
+                            <br>Be the <a href="#trip_join">first one</a>!</p>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-7">
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1">
+                            <div class="row">
+                                <div class="col-md-4 field-name">
+                                    <h3>DATE:</h3>
+                                </div>
+                                <div class="col-md-8 field-content">
+                                    <h3>{{ trip.date }}</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 field-name">
+                                    <h3>TIME:</h3>
+                                </div>
+                                <div class="col-md-8 field-content">
+                                    <h3>{{ trip.startTime }} - {{ trip.endTime }}</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 field-name">
+                                    <h3>LOCATION:</h3>
+                                </div>
+                                <div class="col-md-8 field-content">
+                                    <h3>{{ trip.location }}</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 field-name">
+                                    <h3>GROUP SIZE:</h3>
+                                </div>
+                                <div class="col-md-8 field-content">
+                                    <h3>{{ trip.minGroupSize }} - {{ trip.maxGroupSize }} pax</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 field-name">
+                                    <h3>PRICE / PERSON:</h3>
+                                </div>
+                                <div class="col-md-8 field-content">
+                                    <h3>SGD {{ trip.price|appendzero }}</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 field-name">
+                                    <h3>ITEMS TO BRING:</h3>
+                                </div>
+                                <div class="col-md-8 field-content">
+                                    <h3>
+                                        <ul class="incl-excl">
+                                            {% for item in trip.itemsList %}
+                                                <li>{{ item }}</li>
+                                            {%endfor%}
+                                        </ul>
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 field-name">
+                                    <h3>INCLUDES:</h3>
+                                </div>
+                                <div class="col-md-8 field-content">
+                                    <h3>
+                                        <ul class="incl-excl">
+                                            {% for include in trip.includes %}
+                                            <li>{{ include }}</li>
+                                            {%endfor%}
+                                        </ul>
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 field-name">
+                                    <h3>EXCLUDES:</h3>
+                                </div>
+                                <div class="col-md-8 field-content">
+                                    <h3>
+                                        <ul class="incl-excl">
+                                            {% for exclude in trip.excludes %}
+                                            <li>{{ exclude }}</li>
+                                            {%endfor%}
+                                        </ul>
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 field-name">
+                                    <h3>THEME:</h3>
+                                </div>
+                                <div class="col-md-8 field-content">
+                                    <h3>{{ trip.theme.title }}</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 field-name">
+                                    <h3>GETTING THERE:</h3>
+                                </div>
+                                <div class="col-md-8 field-content">
+                                    <h3>
+                                        {% for transport in trip.transportation %}
+                                        {% if forloop.last %}
+                                            {{transport}}
+                                        {%else%}
+                                            {{transport}},
+                                        {%endif%}
+                                        {%endfor%} 
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEPARATOR -->
+        <hr class="trip-separator">
+
+        <!-- TRIP HOST DETAILS -->
+        <div class="container-fluid trip-host" id="trip_host">
+            <div class="row">
+                <h1>ABOUT THE HOST</h1>
+                <div class="col-sm-3 col-sm-offset-1 col-md-2 col-md-offset-2 host-pic">
+                    <img src="{{ trip.host.customuser.profilePic }}" class="img-responsive img-thumbnail">
+                </div>
+                <div class="col-sm-7 col-md-6">
+                    <h3>{{ trip.host.get_full_name }}</h3>
+                    <h4>{{ trip.host.hostdetail.course }}</h4>
+                    <h4>{{ trip.host.hostdetail.university }}</h4>
+                    <p>{{ trip.host.hostdetail.description }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- JOIN TRIP + PAYMENT -->
+        <!-- TODO: Add FB Share button. -->
+        <div class="container-fluid trip-join" id="trip_join">
+            <div class="row">
+                <h1>JOIN THIS TRIP</h1> {% if not user.is_authenticated %}
+                <a href="{% url 'tripbuddy:sign-in'%}">
+                    <button class="btn btn-primary">SIGN IN</button>
+                </a>
+                {% elif user == trip.host %}
+                <h3>YOU ARE HOSTING THIS TRIP!</h3>
+                <h4>If you can't make it and would like to cancel this trip, please <a href="mailto:contact@tripbuddy.sg?Subject=Cancellation%20of%20Trip">contact us</a><strong>
+                    immediately</strong>.</h4> {% elif user in trip.custs.all %}
+                <h3>YOU HAVE ALREADY JOINED THIS TRIP!</h3> {% if not oneDayBefore %}
+                <h4>If you can't make it and would like a partial refund, please <a href="{% url 'tripbuddy:feedback' %}">contact us</a>.</h4>
+                <h4>Enjoy your trip and <a href="mailto:contact@tripbuddy.sg">let us know</a> if you have any questions!</h4> {%endif%} {% elif time %}
+                <h3>Sorry, you can no longer join this trip.</h3>
+                <h4>It is less than eight hours before the trip starts. You can check out more trips <a href="{% url 'tripbuddy:view-all-trips' %}">here</a>, though!</h4> {% elif trip.custs.objects.count >= trip.maxGroupSize %}
+                <h3>Sorry, you can no longer join this trip.</h3>
+                <h4>The maximum group size has been met. You can check out more trips <a href="{% url 'tripbuddy:view-all-trips' %}">here</a>, though!</h4> {% else %}
+                <!--FIXME:Data amount in cents-->
+                <!--NOTE:Change the key in deployment-->
+                <div class="col-md-8 col-md-offset-2">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="pk_test_xzwNAABJ2UMXRDoqX6ckJYlQ" data-currency="sgd" data-amount={{price_in_cents}} data-name="TripBuddySG" data-description={{trip.title}} data-image={{trip.picture.url}} data-locale="auto">
+                        </script>
+                    </form>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+
+        <!-- FOOTER -->
+        {% include 'footer.html' %}
+    </div>
+
+    <!-- NAVBAR COLLAPSE FIX ON MOBILE FOR #LINKS -->
+    <script>
+        $(document).ready(function () {
+            $(".navbar-nav li a").click(function (event) {
+                $(".navbar-collapse").collapse('hide');
+            });
+        });
+    </script>
+</body>

@@ -1,0 +1,9 @@
+SECRET_KEY = <Django Secret Key>
+SOCIAL_AUTH_FACEBOOK_KEY = <Facebook Key>
+SOCIAL_AUTH_FACEBOOK_SECRET = <Facebook Secret Key>
+dbpassword = <Postgres DB Password>
+MEDIA_ROOT = <Absolute Path to TripBuddySG> + '/media/'
+EMAIL_HOST = <E-mail SMTP Host>
+EMAIL_HOST_USER = <E-mail ID>
+EMAIL_HOST_PASSWORD = <E-mail Host Password>
+EMAIL_PORT = 465 #Change if this is not your port
