@@ -17,7 +17,7 @@ The front end repository can be found [here](https://github.com/TripBuddySG/Trip
 8. The website should now be running at [http://localhost:8000](http://localhost:8000).
 
 ## Deploy on Digital Ocean
-Please refer [here](Server Setup.md) for instructions on setting up and deploying TripBuddySG on a Digital Ocean droplet.
+Please refer [here](Server%20Setup.md) for instructions on setting up and deploying TripBuddySG on a Digital Ocean droplet.
 
 # Contributing
 Please create an issue or submit a pull request if you wish to contribute. We love open source contributions. :smile: 
